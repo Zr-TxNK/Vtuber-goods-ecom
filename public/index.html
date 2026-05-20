@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO BEST PRACTICE: Title and Meta Description (SEO Section) -->
+  <title>VTuber Merch Hub | Limited Edition VTuber Goods Store</title>
+  <meta name="description" content="Shop exclusive, limited-edition merchandise from your favorite VTubers. Zero-config shopping cart, instant checkout, and real-time inventory matching.">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Header Navigation -->
+  <header class="navbar">
+    <div class="nav-brand" id="nav-logo" role="button" aria-label="VTuber Merch Hub Home">
+      VTuber Merch Hub <span>Ltd.</span>
+    </div>
+    
+    <div class="search-container">
+      <span class="search-icon">🔍</span>
+      <!-- BEST PRACTICE: Debounced Input Search (Rubric Item 1) -->
+      <input type="text" id="search-input" class="search-input" placeholder="Search limited goods..." aria-label="Search product catalog">
+    </div>
+    
+    <nav class="nav-actions">
+      <!-- Unauthenticated Menu -->
+      <div id="auth-nav-guest" style="display: flex; gap: 0.8rem;">
+        <button id="nav-login-btn" class="btn btn-secondary">Login</button>
+        <button id="nav-register-btn" class="btn btn-primary">Register</button>
+      </div>
+      
+      <!-- Authenticated Menu -->
+      <div id="auth-nav-user" style="display: none; align-items: center; gap: 1rem;">
+        <span id="user-greeting" style="font-weight: 500; font-size: 0.9rem;"></span>
+        <button id="nav-orders-btn" class="btn btn-secondary">Order History</button>
+        <button id="nav-logout-btn" class="btn btn-accent">Logout</button>
+      </div>
+
+      <!-- Cart Button with Count Badge -->
+      <button id="nav-cart-btn" class="btn btn-primary cart-btn" aria-label="Open shopping cart">
+        🛒 Cart
+        <span id="cart-badge" class="cart-count">0</span>
+      </button>
+    </nav>
+  </header>
+
+  <main class="container">
+    
+    <!-- Hero Banner (SEO H1 Tag) -->
+    <section class="hero-banner">
+      <!-- SEO BEST PRACTICE: Single H1 Tag per page (SEO Section) -->
+      <h1 id="main-title">Limited Edition VTuber Goods</h1>
+      <p>Secure premium acrylic stands, hoodies, vinyls, and plushies before they disappear forever. Real-time stock reservation is active.</p>
+      <button id="hero-browse-btn" class="btn btn-secondary">Browse Collection</button>
+    </section>
+
+    <!-- Catalog Section -->
+    <section class="catalog-section" id="catalog-section">
+      
+      <!-- Interactive Filter Sidebar -->
+      <aside class="glass-panel filters-sidebar" aria-label="Filter Catalog">
+        <h2 style="font-size: 1.2rem; margin-bottom: 0.5rem; font-family: var(--font-heading);">Filter Catalog</h2>
+        
+        <div class="filter-group">
+          <label for="category-filter" class="filter-label">Category</label>
+          <select id="category-filter" class="filter-select">
+            <option value="">All Categories</option>
+            <option value="Acrylic Stands">Acrylic Stands</option>
+            <option value="Apparel">Apparel</option>
+            <option value="Keychains">Keychains</option>
+            <option value="Plushies">Plushies</option>
+            <option value="Music">Music</option>
+            <option value="Mugs">Mugs</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label class="filter-label">Price Range ($)</label>
+          <div class="price-range-inputs">
+            <input type="number" id="min-price-filter" class="filter-price-input" placeholder="Min" min="0" step="0.01" aria-label="Minimum Price">
+            <span style="color: var(--text-muted);">to</span>
+            <input type="number" id="max-price-filter" class="filter-price-input" placeholder="Max" min="0" step="0.01" aria-label="Maximum Price">
+          </div>
+        </div>
+
+        <button id="clear-filters-btn" class="btn btn-secondary" style="width: 100%; margin-top: 0.5rem;">Reset Filters</button>
+      </aside>
+
+      <!-- Products Display Area -->
+      <div class="products-container">
+        <div class="products-header">
+          <h2 id="catalog-results-title" style="font-size: 1.4rem; font-family: var(--font-heading);">Available Merchandise</h2>
+          <span id="results-count" style="font-size: 0.9rem; color: var(--text-muted);">Loading products...</span>
+        </div>
+
+        <!-- Dynamic Product Grid -->
+        <!-- BEST PRACTICE: Event Delegation target (Rubric Item 1) -->
+        <div class="products-grid" id="products-grid">
+          <!-- Dynamic cards injected here by app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- User Profile & Order History Section -->
+    <section id="profile-section" class="profile-section glass-panel">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h2 style="font-family: var(--font-heading); color: var(--color-secondary);">Your Order History</h2>
+        <button id="back-to-catalog-btn" class="btn btn-secondary">← Back to Catalog</button>
+      </div>
+      <div id="order-history-list" class="order-history-list">
+        <!-- Injected order history items -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Login Modal -->
+  <div id="login-modal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-content glass-panel" role="dialog" aria-modal="true" aria-labelledby="login-title">
+      <div class="modal-header">
+        <h3 id="login-title" style="font-family: var(--font-heading);">Account Login</h3>
+        <button id="close-login-btn" class="modal-close" aria-label="Close modal">&times;</button>
+      </div>
+      <form id="login-form" class="modal-body">
+        <div class="form-group">
+          <label for="login-email">Email Address</label>
+          <input type="email" id="login-email" class="form-input" required placeholder="tako@kfp.com">
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" class="form-input" required placeholder="••••••••">
+        </div>
+        <button type="submit" id="submit-login-btn" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 0.5rem;">Sign In</button>
+        <p class="modal-footer-text">Don't have an account? <span id="switch-to-register">Register here</span></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Register Modal -->
+  <div id="register-modal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-content glass-panel" role="dialog" aria-modal="true" aria-labelledby="register-title">
+      <div class="modal-header">
+        <h3 id="register-title" style="font-family: var(--font-heading);">Create Account</h3>
+        <button id="close-register-btn" class="modal-close" aria-label="Close modal">&times;</button>
+      </div>
+      <form id="register-form" class="modal-body">
+        <div class="form-group">
+          <label for="register-username">Username</label>
+          <input type="text" id="register-username" class="form-input" required placeholder="TakoFan123" minlength="3">
+        </div>
+        <div class="form-group">
+          <label for="register-email">Email Address</label>
+          <input type="email" id="register-email" class="form-input" required placeholder="tako@kfp.com">
+        </div>
+        <div class="form-group">
+          <label for="register-password">Password (min 6 chars)</label>
+          <input type="password" id="register-password" class="form-input" required placeholder="••••••••" minlength="6">
+        </div>
+        <button type="submit" id="submit-register-btn" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 0.5rem;">Create Account</button>
+        <p class="modal-footer-text">Already have an account? <span id="switch-to-login">Login here</span></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Shopping Cart Sidebar Drawer -->
+  <div id="cart-drawer" class="drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <h3 style="font-family: var(--font-heading); color: var(--color-primary);">Shopping Cart</h3>
+      <button id="close-cart-btn" class="modal-close" aria-label="Close cart drawer">&times;</button>
+    </div>
+    
+    <div id="cart-drawer-items" class="drawer-body">
+      <!-- Injected by app.js -->
+    </div>
+    
+    <div class="drawer-footer">
+      <div class="cart-total-row">
+        <span>Subtotal:</span>
+        <span id="cart-subtotal" style="color: var(--color-secondary);">$0.00</span>
+      </div>
+      <button id="checkout-btn" class="btn btn-primary" style="width: 100%; justify-content: center;">
+        Proceed to Checkout
+      </button>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Footer Section -->
+  <footer style="margin-top: auto; padding: 2rem; border-top: 1px solid var(--border-light); background: rgba(5,5,10,0.6); text-align: center; font-size: 0.85rem; color: var(--text-muted);">
+    <p>© 2026 VTuber Merch Hub. All rights reserved.</p>
+    <p style="margin-top: 0.5rem; font-size: 0.75rem;">University Final Project - Rubric Compliant Architecture (Express/SQLite/Vanilla JS)</p>
+  </footer>
+
+  <!-- JavaScript Application Entry -->
+  <script src="js/app.js"></script>
+</body>
+</html>

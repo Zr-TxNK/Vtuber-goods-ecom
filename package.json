@@ -1,0 +1,25 @@
+{
+  "name": "vtuber-goods-ecom",
+  "version": "1.0.0",
+  "description": "A Zero-Config E-commerce web application for Limited Edition VTuber Goods.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "vtuber",
+    "ecommerce",
+    "sqlite",
+    "vanilla-js",
+    "university-project"
+  ],
+  "author": "Antigravity",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "sqlite3": "^5.1.7"
+  }
+}
