@@ -516,6 +516,7 @@ function renderOrderHistory(orders) {
 
 function backToCatalog() {
   DOM.profileSection.classList.remove('active');
+  // restore grid layout via inline style (matches CSS grid definition)
   DOM.catalogSection.style.display = 'grid';
   fetchProducts();
 }
@@ -614,17 +615,21 @@ function updateAuthUI(isLoggedIn) {
 function showToast(message, type = 'success') {
   const toast = document.createElement('div');
   toast.className = `toast toast-${type}`;
-  
-  const icon = type === 'success' ? '✅' : '❌';
-  toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
-  
+  toast.setAttribute('role', 'alert');
+
+  const icons = { success: '✓', error: '✕', info: 'ℹ' };
+  const icon = icons[type] || icons.info;
+  toast.innerHTML = `<span style="font-weight:900;font-size:1rem;">${icon}</span><span>${message}</span>`;
+
   DOM.toastContainer.appendChild(toast);
-  
-  setTimeout(() => toast.classList.add('active'), 50);
+
+  // Force reflow so transition fires
+  toast.getBoundingClientRect();
+  setTimeout(() => toast.classList.add('active'), 20);
 
   setTimeout(() => {
     toast.classList.remove('active');
-    setTimeout(() => toast.remove(), 400);
+    setTimeout(() => toast.remove(), 450);
   }, 4000);
 }
 
@@ -701,4 +706,12 @@ DOM.checkoutBtn.addEventListener('click', checkout);
 window.addEventListener('DOMContentLoaded', () => {
   hydrateState();
   fetchProducts();
+
+  // Navbar scroll effect
+  const navbar = document.getElementById('main-navbar');
+  if (navbar) {
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+  }
 });
