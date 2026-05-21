@@ -1,93 +1,163 @@
-# Limited Edition VTuber Goods E-Commerce 🦈🔮🎙️
+# VTuber Merch Hub 🦈🔮🎙️
 
-A zero-config, highly compliant E-commerce web application built for a university final project. This project implements advanced structural design patterns and is styled using a premium cyberpunk glassmorphism visual aesthetic.
+ร้านค้าออนไลน์สินค้า VTuber Limited Edition — สร้างด้วย HTML, CSS, และ JavaScript ล้วนๆ  
+ออกแบบมาให้เข้าใจง่ายสำหรับผู้เริ่มต้นเรียนเขียนโค้ด
 
 ---
 
-## 🚀 Quickstart Guide (Zero-Config Portability)
+## 📁 โครงสร้างไฟล์
 
-Follow these simple steps to run the application on any system:
+```
+Vtuber-goods-ecom/
+│
+├── index.html              ← หน้าเว็บหลัก (HTML)
+├── style.css               ← ตกแต่งหน้าเว็บ (CSS)
+├── app.js                  ← ลอจิกหน้าบ้าน (JavaScript)
+│
+├── server.js               ← Express server (Node.js backend)
+├── database.js             ← In-memory placeholder data (แทน SQLite)
+│
+├── authController.js       ← จัดการ login/register
+├── orderController.js      ← จัดการคำสั่งซื้อ
+├── productController.js    ← จัดการสินค้า
+│
+├── authMiddleware.js        ← ตรวจสอบ JWT token
+├── validateMiddleware.js   ← ตรวจสอบ input
+│
+├── authRoutes.js           ← เส้นทาง API /auth
+├── orderRoutes.js          ← เส้นทาง API /orders
+├── productRoutes.js        ← เส้นทาง API /products
+│
+├── authService.js          ← Business logic การ auth
+├── orderService.js         ← Business logic การสั่งซื้อ
+├── productService.js       ← Business logic สินค้า
+│
+├── package.json            ← รายการ dependencies
+└── README.md               ← ไฟล์นี้
+```
 
-### 1. Install Dependencies
-Initialize the project libraries. (This downloads Express, SQLite3, JSONWebToken, and BcryptJS):
+---
+
+## 🚀 วิธีเริ่มต้น
+
+### วิธีที่ 1 — Live Server (ง่ายที่สุด ไม่ต้องรัน Node)
+
+1. เปิดโฟลเดอร์นี้ใน **VS Code**
+2. ติดตั้ง extension **Live Server** (ถ้ายังไม่มี)
+3. คลิกขวาที่ `index.html` → **"Open with Live Server"**
+4. เบราว์เซอร์จะเปิดขึ้นมาอัตโนมัติ ✅
+
+> ใช้ **mock data** จาก `app.js` (12 สินค้าตัวอย่าง) — ไม่ต้องการ backend หรือ database ใดๆ
+
+---
+
+### วิธีที่ 2 — Express Backend (เต็มรูปแบบ)
+
+**ติดตั้ง dependencies ก่อน (ครั้งแรกครั้งเดียว):**
 ```bash
 npm install
 ```
 
-### 2. Run the Automated Tests (Verification Suite)
-Before spinning up the server, run the service layer and database verification suite to confirm that registration, security, parameterized queries, and ACID transactions are functioning perfectly:
+**รัน server:**
 ```bash
-node verify.js
+node server.js
 ```
 
-### 3. Launch the Application
-Start the Node.js server:
-```bash
-npm start
+**เปิดเบราว์เซอร์ที่:**
+```
+http://localhost:3000
 ```
 
-### 4. Visit the Storefront
-Open your web browser and navigate to:
-👉 **[http://localhost:3000](http://localhost:3000)**
+> ใช้ **in-memory data** จาก `database.js` — ไม่มี SQLite, ข้อมูลจะ reset ทุกครั้งที่ restart server
 
 ---
 
-## 📐 Architectural Best Practices Rubric Mapping
+## 🔄 เปลี่ยนโหมด Mock ↔ Backend
 
-This project was built to satisfy the university's architectural standards. Below is the mapping of each rubric requirement to its implementation in the codebase:
+เปิดไฟล์ `app.js` แล้วหาบรรทัดนี้ที่ด้านบน:
 
-### 1. Interaction: Event Delegation & Input Debouncing
-* **Event Delegation:** Rather than attaching click event listeners to hundreds of dynamically-generated merchandise cards, a single listener is placed on the parent grid `#products-grid`. It intercepts clicks and delegates actions to the correct item using `.closest('.add-to-cart-btn')`.
-  * 📍 **Implementation:** [public/js/app.js](file:///c:/Users/phuri/Desktop/vtuber%20r%20rai%20wa/git/vtuber%20ecom/Vtuber-goods-ecom/public/js/app.js)
-* **Debouncing:** When users type in the catalog search input, the character streams are debounced by `300ms` using a custom timer before sending filtering requests to the backend. This prevents API query flooding.
-  * 📍 **Implementation:** [public/js/app.js](file:///c:/Users/phuri/Desktop/vtuber%20r%20rai%20wa/git/vtuber%20ecom/Vtuber-goods-ecom/public/js/app.js) (Functions `debounce` and input mounting)
-
-### 2. State & Continuity: State Hydration
-* The shopping cart uses a global `cartState` array. Changes are serialized to JSON and persisted using browser `localStorage`. On application boot, hydration logic (`hydrateState()`) runs, parses the stored values, and draws the corresponding products back onto the page.
-  * 📍 **Implementation:** [public/js/app.js](file:///c:/Users/phuri/Desktop/vtuber%20r%20rai%20wa/git/vtuber%20ecom/Vtuber-goods-ecom/public/js/app.js) (Functions `hydrateState()` and `persistCartState()`)
-
-### 3. Security (API): Gatekeeper Pattern
-* **Authentication Gatekeeper:** Incoming requests to private endpoints (like checkout or order history) pass through `authenticateToken`, which extracts, verifies, and decodes the JWT stateless session token.
-  * 📍 **Implementation:** [src/middlewares/authMiddleware.js](file:///c:/Users/phuri/Desktop/vtuber%20r%20rai%20wa/git/vtuber%20ecom/Vtuber-goods-ecom/src/middlewares/authMiddleware.js)
-* **Validation Gatekeeper:** Endpoints are guarded by `validateRegister`, `validateLogin`, and `validateCheckout`. These check parameters, validate email formats, ensure positive quantities, and sanitize incoming strings (HTML escaping) to block cross-site scripting (XSS).
-  * 📍 **Implementation:** [src/middlewares/validateMiddleware.js](file:///c:/Users/phuri/Desktop/vtuber%20r%20rai%20wa/git/vtuber%20ecom/Vtuber-goods-ecom/src/middlewares/validateMiddleware.js)
-
-### 4. Checkout Body Parsing
-* Standard JSON parsing is initialized on the Express server using `express.json()` middleware, allowing controllers to receive clean Javascript objects directly in `req.body`.
-  * 📍 **Implementation:** [server.js](file:///c:/Users/phuri/Desktop/vtuber%20r%20rai%20wa/git/vtuber%20ecom/Vtuber-goods-ecom/server.js)
-
-### 5. Relational Database Schema
-* The database uses SQLite (zero-config, portable file format) with full relational integrity. Four tables are set up with Primary Keys (PK) and Foreign Keys (FK):
-  * `users` — account credentials and roles.
-  * `products` — product catalogs, category details, pricing, and stock.
-  * `orders` — user orders linked via `user_id` FK.
-  * `order_items` — mapping quantities and historical prices linked via `order_id` FK.
-  * 📍 **Implementation:** [src/config/database.js](file:///c:/Users/phuri/Desktop/vtuber%20r%20rai%20wa/git/vtuber%20ecom/Vtuber-goods-ecom/src/config/database.js)
-
-### 6. SQL Safety: Parameterized Queries
-* Raw string concatenation is strictly banned. Database interactions use SQL placeholders (`?`) to prevent SQL injection vulnerabilities.
-  * 📍 **Implementation:** Used exclusively in all queries under [src/services/](file:///c:/Users/phuri/Desktop/vtuber%20r%20rai%20wa/git/vtuber%20ecom/Vtuber-goods-ecom/src/services/) (`authService.js`, `productService.js`, `orderService.js`).
-
-### 7. Modularization: Controller-Route-Service Pattern
-* Separation of concerns is divided into distinct modular layers:
-  * **Routes:** Receives the request and calls validation/authentication gatekeepers.
-  * **Controllers:** Handles HTTP status codes, extracts arguments, and maps responses.
-  * **Services:** Executes business calculations, hashes passwords, and triggers database transaction sets.
-  * 📍 **Directory Map:** [src/routes/](file:///c:/Users/phuri/Desktop/vtuber%20r%20rai%20wa/git/vtuber%20ecom/Vtuber-goods-ecom/src/routes/), [src/controllers/](file:///c:/Users/phuri/Desktop/vtuber%20r%20rai%20wa/git/vtuber%20ecom/Vtuber-goods-ecom/src/controllers/), [src/services/](file:///c:/Users/phuri/Desktop/vtuber%20r%20rai%20wa/git/vtuber%20ecom/Vtuber-goods-ecom/src/services/)
-
-### 8. Bonus Challenge: Pre-Checkout Stock Check (ACID Transactions)
-* The checkout routine in `orderService.js` is wrapped inside an SQL Transaction block (`BEGIN TRANSACTION`, `COMMIT`, `ROLLBACK`):
-  1. It performs a stock-check for every item in the cart.
-  2. If any single item's stock is insufficient (e.g., requested > stock), it throws an explicit `"Out of Stock"` error.
-  3. The `catch` block catches this error and triggers a database `ROLLBACK`. This restores all stock adjustments and prevents any new orders from being logged.
-  4. If all items pass stock checks, inventories are updated, records inserted, and the database changes are committed via `COMMIT`.
-  * 📍 **Implementation:** [src/services/orderService.js](file:///c:/Users/phuri/Desktop/vtuber%20r%20rai%20wa/git/vtuber%20ecom/Vtuber-goods-ecom/src/services/orderService.js) (Function `createOrder`)
+```js
+const USE_MOCK_DATA = true;   // 🟡 Live Server mode
+const USE_MOCK_DATA = false;  // 🟢 Express backend mode
+```
 
 ---
 
-## 🎨 Premium Visual Interface
+## ✨ Features
 
-The frontend client is designed with:
-* **Glassmorphism panels:** Multi-layered panels with transparent backing (`rgba`), subtle glowing border profiles, and heavy background blurs (`backdrop-filter: blur(16px)`).
-* **Responsive Layouts:** Uses CSS Flexbox and Grid structures that automatically adapt between desktop monitors and smartphone screens.
-* **Micro-Animations:** Hover transitions on card items, scaling buttons, and toast notifications create a dynamic, reactive application experience.
+| Feature | รายละเอียด |
+|---------|-----------|
+| 🛍️ แคตตาล็อกสินค้า | แสดงสินค้า 12 รายการพร้อม badge สต็อก |
+| 🔍 ค้นหา + กรอง | ค้นหาชื่อ, กรองหมวดหมู่, กรองราคา |
+| 🛒 ตะกร้าสินค้า | เพิ่ม/ลด/ลบสินค้า, บันทึกใน localStorage |
+| 🔐 ระบบสมาชิก | สมัครสมาชิก / เข้าสู่ระบบ (mock หรือ JWT จริง) |
+| 📦 ประวัติคำสั่งซื้อ | ดูรายการสั่งซื้อหลัง login |
+| 🔔 Toast Notifications | แจ้งเตือนทุกการกระทำ |
+| 📱 Responsive | รองรับทุกขนาดหน้าจอ |
+
+---
+
+## 🎨 การออกแบบ
+
+- **ธีม:** Dark Cyberpunk + Glassmorphism
+- **ฟอนต์:** Noto Sans Thai (ภาษาไทย) + Outfit (heading)
+- **สีหลัก:** Purple `#a855f7` + Cyan `#22d3ee`
+- **Animations:** Background orbs, card hover, hero rings, toast slide-in
+
+---
+
+## 🧱 Tech Stack
+
+| ส่วน | เทคโนโลยี |
+|------|-----------|
+| Frontend | HTML5, CSS3, Vanilla JavaScript |
+| Backend (optional) | Node.js + Express.js |
+| Database | In-memory JavaScript array (placeholder) |
+| Auth | JWT (jsonwebtoken) + bcryptjs |
+| Font | Google Fonts (Noto Sans TH, Outfit) |
+
+---
+
+## 📚 แนวคิดที่เรียนรู้จากโปรเจกต์นี้
+
+### 1. Event Delegation
+แทนที่จะ attach event listener ทีละปุ่ม ใช้ listener เดียวบน `#products-grid` แล้วจับ event ที่ bubble up ขึ้นมา
+
+```js
+// app.js
+DOM.productsGrid.addEventListener('click', (event) => {
+  const btn = event.target.closest('.add-to-cart-btn');
+  if (!btn) return;
+  // จัดการ add to cart
+});
+```
+
+### 2. Debouncing
+ป้องกัน function ทำงานถี่เกินไปตอนพิมพ์ค้นหา — รอให้หยุดพิมพ์ 300ms ก่อนค่อย filter
+
+```js
+// app.js
+DOM.searchInput.addEventListener('input', debounce(() => fetchProducts(), 300));
+```
+
+### 3. localStorage
+บันทึกตะกร้าสินค้าไว้ใน browser ไม่หายแม้ refresh หน้า
+
+```js
+// บันทึก
+localStorage.setItem('cart', JSON.stringify(cartState));
+
+// โหลดกลับมา
+const saved = localStorage.getItem('cart');
+cartState = JSON.parse(saved);
+```
+
+### 4. Controller-Route-Service Pattern (Backend)
+แบ่งโค้ด backend เป็น 3 ชั้น:
+- **Routes** — รับ HTTP request, เรียก middleware
+- **Controllers** — ดึงข้อมูลจาก request, ส่ง response
+- **Services** — business logic จริงๆ (ตรวจสต็อก, hash password ฯลฯ)
+
+---
+
+*University Final Project — HTML / CSS / JavaScript / Node.js + Express*

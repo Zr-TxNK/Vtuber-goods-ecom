@@ -3,7 +3,7 @@
  * Extracts filtering queries from request and returns matching products.
  */
 
-const productService = require('../services/productService');
+const productService = require('./productService');
 
 /**
  * Handle GET /api/products

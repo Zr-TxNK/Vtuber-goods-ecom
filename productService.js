@@ -3,7 +3,7 @@
  * Service layers handle business workflows and database operations.
  */
 
-const { dbAll, dbGet } = require('../config/database');
+const { dbAll, dbGet } = require('./database');
 
 /**
  * Fetch all products matching the interactive filters

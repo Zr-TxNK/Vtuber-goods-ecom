@@ -1,54 +1,52 @@
 /**
- * BEST PRACTICE: Express Entry Point & Middleware Configuration
- * This file serves as the main bootstrapper for the server. It imports middleware,
- * initializes database tables, registers API routers, and serves static files.
+ * server.js — Express Entry Point
+ *
+ * รันด้วย: node server.js
+ * เปิดเบราว์เซอร์ที่: http://localhost:3000
+ *
+ * หมายเหตุ: ระบบ database ถูกแทนที่ด้วย in-memory placeholder ใน database.js
+ * ข้อมูลจะ reset ทุกครั้งที่รีสตาร์ท server
  */
 
 const express = require('express');
-const path = require('path');
-const { initializeDatabase } = require('./src/config/database');
+const path    = require('path');
+const { initializeDatabase } = require('./database');
 
-// Import Route modules (Controller-Route-Service Pattern - Route Mounts)
-const authRoutes = require('./src/routes/authRoutes');
-const productRoutes = require('./src/routes/productRoutes');
-const orderRoutes = require('./src/routes/orderRoutes');
+// Routes
+const authRoutes    = require('./authRoutes');
+const productRoutes = require('./productRoutes');
+const orderRoutes   = require('./orderRoutes');
 
-const app = express();
+const app  = express();
 const PORT = process.env.PORT || 3000;
 
-// BEST PRACTICE: Checkout Body Parsing (Rubric Item 4)
+// Body parser
 app.use(express.json());
 
-// Serve static frontend files from 'public' folder (Zero-Config setup)
-app.use(express.static(path.join(__dirname, 'public')));
+// เสิร์ฟ static files จาก root (index.html, style.css, app.js อยู่ที่เดียวกัน)
+app.use(express.static(path.join(__dirname)));
 
-// Mount API routes (Separation of Concerns)
-app.use('/api/auth', authRoutes);
+// API Routes
+app.use('/api/auth',     authRoutes);
 app.use('/api/products', productRoutes);
-app.use('/api/orders', orderRoutes);
+app.use('/api/orders',   orderRoutes);
 
-// General error handler middleware
+// Global error handler
 app.use((err, req, res, next) => {
-  console.error('Global Error Handler caught:', err.stack);
-  res.status(500).json({ error: 'Something went wrong on the server.' });
+  console.error('Server Error:', err.stack);
+  res.status(500).json({ error: 'เกิดข้อผิดพลาดที่ server' });
 });
 
-// Initialize database and start server
+// Start
 const startServer = async () => {
-  try {
-    // Run schema migrations and data seeding on boot
-    await initializeDatabase();
-    
-    app.listen(PORT, () => {
-      console.log(`=======================================================`);
-      console.log(`🚀 Limited Edition VTuber Goods Store listening on port ${PORT}`);
-      console.log(`🌐 Open http://localhost:${PORT} in your web browser!`);
-      console.log(`=======================================================`);
-    });
-  } catch (error) {
-    console.error('Failed to initialize database and start server:', error);
-    process.exit(1);
-  }
+  await initializeDatabase();
+  app.listen(PORT, () => {
+    console.log('='.repeat(50));
+    console.log(`🚀 VTuber Merch Hub กำลังทำงานที่ port ${PORT}`);
+    console.log(`🌐 เปิด http://localhost:${PORT} ในเบราว์เซอร์`);
+    console.log(`📦 ใช้ in-memory placeholder (ไม่มี SQLite)`);
+    console.log('='.repeat(50));
+  });
 };
 
 startServer();

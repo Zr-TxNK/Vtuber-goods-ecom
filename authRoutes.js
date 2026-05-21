@@ -6,8 +6,8 @@
 
 const express = require('express');
 const router = express.Router();
-const authController = require('../controllers/authController');
-const { validateRegister, validateLogin } = require('../middlewares/validateMiddleware');
+const authController = require('./authController');
+const { validateRegister, validateLogin } = require('./validateMiddleware');
 
 // Mount registration and login routes with their respective validators (Gatekeeper Pattern)
 router.post('/register', validateRegister, authController.register);

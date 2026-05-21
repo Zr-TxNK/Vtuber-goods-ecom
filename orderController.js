@@ -4,7 +4,7 @@
  * delegates the checkout operation to orderService, and responds with HTTP status codes.
  */
 
-const orderService = require('../services/orderService');
+const orderService = require('./orderService');
 
 /**
  * Handle POST /api/orders

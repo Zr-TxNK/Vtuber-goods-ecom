@@ -5,7 +5,7 @@
  * database calls or business rules directly.
  */
 
-const authService = require('../services/authService');
+const authService = require('./authService');
 
 /**
  * Handle POST /register

@@ -4,7 +4,7 @@
  * and relational queries.
  */
 
-const { dbRun, dbGet, dbAll } = require('../config/database');
+const { dbRun, dbGet, dbAll } = require('./database');
 
 /**
  * Creates an order inside a TRANSACTION block and performs stock check.

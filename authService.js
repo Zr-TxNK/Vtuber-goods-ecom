@@ -7,8 +7,8 @@
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { dbRun, dbGet } = require('../config/database');
-const { JWT_SECRET } = require('../middlewares/authMiddleware');
+const { dbRun, dbGet } = require('./database');
+const { JWT_SECRET } = require('./authMiddleware');
 
 /**
  * Register a new user

@@ -3,17 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- SEO BEST PRACTICE: Title and Meta Description -->
   <title>VTuber Merch Hub | ร้านค้าสินค้า VTuber Limited Edition</title>
-  <meta name="description" content="ช้อปสินค้า Limited Edition สุดพิเศษจาก VTuber ที่คุณชื่นชอบ ตะกร้าสินค้าพร้อมใช้ Checkout ทันที และระบบตรวจสอบสต็อกแบบ Real-time">
+  <meta name="description" content="ช้อปสินค้า Limited Edition สุดพิเศษจาก VTuber ที่คุณชื่นชอบ">
 
-  <!-- Google Fonts: Noto Sans TH + Outfit + Inter -->
+  <!-- Google Fonts: Noto Sans TH + Outfit -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- CSS Stylesheet -->
-  <link rel="stylesheet" href="css/style.css">
+  <!-- CSS อยู่ไฟล์เดียวกัน -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -34,25 +33,24 @@
       <span class="search-icon" aria-hidden="true">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       </span>
-      <!-- BEST PRACTICE: Debounced Input Search (Rubric Item 1) -->
       <input type="text" id="search-input" class="search-input" placeholder="ค้นหาสินค้า Limited..." aria-label="ค้นหาสินค้า">
     </div>
 
     <nav class="nav-actions" aria-label="เมนูหลัก">
-      <!-- Unauthenticated Menu -->
+      <!-- เมนูสำหรับคนยังไม่ login -->
       <div id="auth-nav-guest" class="auth-group">
         <button id="nav-login-btn" class="btn btn-secondary">เข้าสู่ระบบ</button>
         <button id="nav-register-btn" class="btn btn-primary">สมัครสมาชิก</button>
       </div>
 
-      <!-- Authenticated Menu -->
+      <!-- เมนูสำหรับคนที่ login แล้ว -->
       <div id="auth-nav-user" class="auth-group" style="display: none;">
         <span id="user-greeting" class="user-greeting"></span>
         <button id="nav-orders-btn" class="btn btn-secondary">ประวัติคำสั่งซื้อ</button>
         <button id="nav-logout-btn" class="btn btn-accent">ออกจากระบบ</button>
       </div>
 
-      <!-- Cart Button with Count Badge -->
+      <!-- ปุ่มตะกร้า -->
       <button id="nav-cart-btn" class="btn btn-primary cart-btn" aria-label="เปิดตะกร้าสินค้า">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
         ตะกร้า
@@ -63,11 +61,10 @@
 
   <main class="container">
 
-    <!-- Hero Banner (SEO H1 Tag) -->
+    <!-- Hero Banner -->
     <section class="hero-banner" aria-labelledby="main-title">
       <div class="hero-content">
         <div class="hero-tag">✦ Limited Edition Collection 2026</div>
-        <!-- SEO BEST PRACTICE: Single H1 Tag per page -->
         <h1 id="main-title">สินค้า VTuber<br><span class="hero-gradient-text">Limited Edition</span></h1>
         <p>รวมสินค้าพิเศษจาก VTuber ที่คุณชื่นชอบ ก่อนหมดสต็อก! ระบบจอง Real-time พร้อมแล้ว</p>
         <div class="hero-actions">
@@ -77,8 +74,8 @@
           </button>
           <div class="hero-stats">
             <div class="hero-stat">
-              <span class="hero-stat-num">500+</span>
-              <span class="hero-stat-label">สินค้าในสต็อก</span>
+              <span class="hero-stat-num">12</span>
+              <span class="hero-stat-label">สินค้าตัวอย่าง</span>
             </div>
             <div class="hero-stat-divider"></div>
             <div class="hero-stat">
@@ -99,7 +96,7 @@
     <!-- Catalog Section -->
     <section class="catalog-section" id="catalog-section" aria-label="แคตตาล็อกสินค้า">
 
-      <!-- Interactive Filter Sidebar -->
+      <!-- Sidebar กรองสินค้า -->
       <aside class="glass-panel filters-sidebar" aria-label="ตัวกรองสินค้า">
         <div class="sidebar-header">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
@@ -134,22 +131,19 @@
         </button>
       </aside>
 
-      <!-- Products Display Area -->
+      <!-- พื้นที่แสดงสินค้า -->
       <div class="products-container">
         <div class="products-header">
           <h2 id="catalog-results-title" class="products-title">สินค้าพร้อมจำหน่าย</h2>
           <span id="results-count" class="results-count">กำลังโหลด...</span>
         </div>
 
-        <!-- Dynamic Product Grid -->
-        <!-- BEST PRACTICE: Event Delegation target (Rubric Item 1) -->
-        <div class="products-grid" id="products-grid">
-          <!-- Dynamic cards injected here by app.js -->
-        </div>
+        <!-- Grid สินค้า — app.js จะ inject card เข้ามา -->
+        <div class="products-grid" id="products-grid"></div>
       </div>
     </section>
 
-    <!-- User Profile & Order History Section -->
+    <!-- ส่วนประวัติคำสั่งซื้อ -->
     <section id="profile-section" class="profile-section glass-panel" aria-label="ประวัติคำสั่งซื้อ">
       <div class="profile-section-header">
         <h2 class="profile-title">ประวัติคำสั่งซื้อ</h2>
@@ -158,14 +152,12 @@
           กลับไปดูสินค้า
         </button>
       </div>
-      <div id="order-history-list" class="order-history-list">
-        <!-- Injected order history items -->
-      </div>
+      <div id="order-history-list" class="order-history-list"></div>
     </section>
 
   </main>
 
-  <!-- Login Modal -->
+  <!-- Modal: Login -->
   <div id="login-modal" class="modal-overlay" aria-hidden="true" role="presentation">
     <div class="modal-content glass-panel" role="dialog" aria-modal="true" aria-labelledby="login-title">
       <div class="modal-header">
@@ -190,7 +182,7 @@
     </div>
   </div>
 
-  <!-- Register Modal -->
+  <!-- Modal: Register -->
   <div id="register-modal" class="modal-overlay" aria-hidden="true" role="presentation">
     <div class="modal-content glass-panel" role="dialog" aria-modal="true" aria-labelledby="register-title">
       <div class="modal-header">
@@ -219,7 +211,7 @@
     </div>
   </div>
 
-  <!-- Shopping Cart Sidebar Drawer -->
+  <!-- Cart Drawer (Sidebar) -->
   <div id="cart-drawer" class="drawer" aria-hidden="true">
     <div class="drawer-header">
       <div class="drawer-title-group">
@@ -229,9 +221,7 @@
       <button id="close-cart-btn" class="modal-close" aria-label="ปิดตะกร้า">&times;</button>
     </div>
 
-    <div id="cart-drawer-items" class="drawer-body">
-      <!-- Injected by app.js -->
-    </div>
+    <div id="cart-drawer-items" class="drawer-body"></div>
 
     <div class="drawer-footer">
       <div class="cart-total-row">
@@ -245,19 +235,19 @@
     </div>
   </div>
 
-  <!-- Toast Notification Container -->
+  <!-- Toast Notifications -->
   <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="false"></div>
 
-  <!-- Footer Section -->
+  <!-- Footer -->
   <footer class="site-footer">
     <div class="footer-inner">
       <p class="footer-brand">✦ VTuber Merch Hub</p>
-      <p class="footer-copy">© 2026 VTuber Merch Hub. All rights reserved.</p>
-      <p class="footer-note">University Final Project · Express / SQLite / Vanilla JS</p>
+      <p class="footer-copy">© 2026 VTuber Merch Hub. สงวนลิขสิทธิ์ทุกประการ</p>
+      <p class="footer-note">University Final Project · HTML / CSS / JavaScript</p>
     </div>
   </footer>
 
-  <!-- JavaScript Application Entry -->
-  <script src="js/app.js"></script>
+  <!-- JavaScript อยู่ไฟล์เดียวกัน -->
+  <script src="app.js"></script>
 </body>
 </html>
