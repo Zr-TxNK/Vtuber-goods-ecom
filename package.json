@@ -1,0 +1,26 @@
+{
+  "name": "vtuber-goods-ecom",
+  "version": "1.0.0",
+  "description": "ร้านค้าออนไลน์สินค้า VTuber Limited Edition — สร้างด้วย HTML, CSS, และ JavaScript ล้วนๆ   ออกแบบมาให้เข้าใจง่ายสำหรับผู้เริ่มต้นเรียนเขียนโค้ด",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zr-TxNK/Vtuber-goods-ecom.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zr-TxNK/Vtuber-goods-ecom/issues"
+  },
+  "homepage": "https://github.com/Zr-TxNK/Vtuber-goods-ecom#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3"
+  }
+}

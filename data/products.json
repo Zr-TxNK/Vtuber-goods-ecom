@@ -1,0 +1,182 @@
+[
+  {
+    "id": 1,
+    "name": "Hololive Acrylic Stand Vol.1",
+    "category": "Acrylic Stands",
+    "price": 24.99,
+    "stock": 15,
+    "description": "อะคริลิคสแตนด์ขนาด A5 พิมพ์ลาย 4 สี ความละเอียดสูง มาพร้อมฐานตั้งโต๊ะ",
+    "image_url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%231a1a3e'/%3E%3Crect y='300' width='400' height='100' fill='%236d28d9'/%3E%3Ctext x='200' y='205' text-anchor='middle' font-family='sans-serif' font-size='24' fill='white'%3EAcrylic Stand%3C/text%3E%3C/svg%3E"
+  },
+  {
+    "id": 2,
+    "name": "Pekora Hoodie Black Edition",
+    "category": "Apparel",
+    "price": 59.99,
+    "stock": 3,
+    "description": "เสื้อฮู้ดดี้สีดำปักลาย Pekora ผ้า cotton 100% น้ำหนักดี ซับในนุ่ม",
+    "image_url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%230f172a'/%3E%3Crect y='300' width='400' height='100' fill='%230e7490'/%3E%3Ctext x='200' y='205' text-anchor='middle' font-family='sans-serif' font-size='24' fill='white'%3EPekora Hoodie%3C/text%3E%3C/svg%3E"
+  },
+  {
+    "id": 3,
+    "name": "Gura Shark Plushie",
+    "category": "Plushies",
+    "price": 39.99,
+    "stock": 0,
+    "description": "ตุ๊กตาฉลามน้อย Gura ขนาด 30 cm ผ้านุ่มไม่ระคายเคืองผิว เหมาะสำหรับตกแต่ง",
+    "image_url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%231a1a3e'/%3E%3Crect y='300' width='400' height='100' fill='%23be123c'/%3E%3Ctext x='200' y='205' text-anchor='middle' font-family='sans-serif' font-size='24' fill='white'%3EGura Plushie%3C/text%3E%3C/svg%3E"
+  },
+  {
+    "id": 4,
+    "name": "Mumei Keychain Set",
+    "category": "Keychains",
+    "price": 14.99,
+    "stock": 50,
+    "description": "พวงกุญแจอะคริลิค Mumei เซต 3 ชิ้น ขนาด 5 cm เคลือบ UV กันซีด",
+    "image_url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%230f172a'/%3E%3Crect y='300' width='400' height='100' fill='%23059669'/%3E%3Ctext x='200' y='205' text-anchor='middle' font-family='sans-serif' font-size='24' fill='white'%3EMumei Keychain%3C/text%3E%3C/svg%3E"
+  },
+  {
+    "id": 5,
+    "name": "Suisei Stellar Stellar Vinyl",
+    "category": "Music",
+    "price": 34.99,
+    "stock": 8,
+    "description": "แผ่น Vinyl เพลง Stellar Stellar ของ Suisei ขนาด 12 นิ้ว พิมพ์ปก Full Art",
+    "image_url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%231e1b4b'/%3E%3Crect y='300' width='400' height='100' fill='%23d97706'/%3E%3Ctext x='200' y='205' text-anchor='middle' font-family='sans-serif' font-size='24' fill='white'%3EStellar Vinyl%3C/text%3E%3C/svg%3E"
+  },
+  {
+    "id": 6,
+    "name": "Marine Anniversary Mug",
+    "category": "Mugs",
+    "price": 19.99,
+    "stock": 22,
+    "description": "แก้วมัคเซรามิก 350ml ลาย Marine พิมพ์ Heat-sensitive เปลี่ยนสีตอนใส่น้ำร้อน",
+    "image_url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%231a1a3e'/%3E%3Crect y='300' width='400' height='100' fill='%237c3aed'/%3E%3Ctext x='200' y='205' text-anchor='middle' font-family='sans-serif' font-size='24' fill='white'%3EMarine Mug%3C/text%3E%3C/svg%3E"
+  },
+  {
+    "id": 7,
+    "name": "Korone Doggo Plushie XL",
+    "category": "Plushies",
+    "price": 54.99,
+    "stock": 4,
+    "description": "ตุ๊กตาสุนัขน้อย Korone รุ่น XL ขนาด 50 cm ผ้าขนนุ่มเด้ง สีเหลืองสดใส",
+    "image_url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%231c1917'/%3E%3Crect y='300' width='400' height='100' fill='%23ca8a04'/%3E%3Ctext x='200' y='205' text-anchor='middle' font-family='sans-serif' font-size='24' fill='white'%3EKorone XL%3C/text%3E%3C/svg%3E"
+  },
+  {
+    "id": 8,
+    "name": "Aqua Idol Outfit Acrylic",
+    "category": "Acrylic Stands",
+    "price": 29.99,
+    "stock": 12,
+    "description": "อะคริลิคลาย Aqua ชุด Idol ขนาด B5 พิมพ์สีสดใส แผ่นหนา 5 มม.",
+    "image_url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%230c1a3a'/%3E%3Crect y='300' width='400' height='100' fill='%230891b2'/%3E%3Ctext x='200' y='205' text-anchor='middle' font-family='sans-serif' font-size='24' fill='white'%3EAqua Acrylic%3C/text%3E%3C/svg%3E"
+  },
+  {
+    "id": 9,
+    "name": "Kronii Oversized T-Shirt",
+    "category": "Apparel",
+    "price": 44.99,
+    "stock": 7,
+    "description": "เสื้อยืด Oversized ลาย Kronii สีขาวพิมพ์ลายนาฬิกา ผ้า cotton combed 32s",
+    "image_url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%231a1a3e'/%3E%3Crect y='300' width='400' height='100' fill='%237c3aed'/%3E%3Ctext x='200' y='205' text-anchor='middle' font-family='sans-serif' font-size='24' fill='white'%3EKronii Shirt%3C/text%3E%3C/svg%3E"
+  },
+  {
+    "id": 10,
+    "name": "IRyS IRyStocrat Album CD",
+    "category": "Music",
+    "price": 27.99,
+    "stock": 16,
+    "description": "แผ่น CD อัลบั้ม EP แรกของ IRyS มาพร้อม Photobook 24 หน้า และการ์ดลายเซ็น",
+    "image_url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%231a0a2e'/%3E%3Crect y='300' width='400' height='100' fill='%2316a34a'/%3E%3Ctext x='200' y='205' text-anchor='middle' font-family='sans-serif' font-size='24' fill='white'%3EIRyS Album%3C/text%3E%3C/svg%3E"
+  },
+  {
+    "id": 11,
+    "name": "Fubuki Winter Keychain",
+    "category": "Keychains",
+    "price": 9.99,
+    "stock": 35,
+    "description": "พวงกุญแจ Fubuki ชุดฤดูหนาว อะคริลิคใส สาย PU ยาว 10 cm พร้อมกระดิ่งจิ๋ว",
+    "image_url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%230f172a'/%3E%3Crect y='300' width='400' height='100' fill='%230284c7'/%3E%3Ctext x='200' y='205' text-anchor='middle' font-family='sans-serif' font-size='24' fill='white'%3EFubuki Key%3C/text%3E%3C/svg%3E"
+  },
+  {
+    "id": 12,
+    "name": "Miko Sakura Gradient Mug",
+    "category": "Mugs",
+    "price": 22.99,
+    "stock": 18,
+    "description": "แก้วมัค Miko ลาย Sakura Gradient 400ml พิมพ์ทั้งสองด้าน ล้างเครื่องได้",
+    "image_url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%232a0a1e'/%3E%3Crect y='300' width='400' height='100' fill='%23e11d48'/%3E%3Ctext x='200' y='205' text-anchor='middle' font-family='sans-serif' font-size='24' fill='white'%3EMiko Mug%3C/text%3E%3C/svg%3E"
+  },
+  {
+    "id": 13,
+    "name": "Calliope Concert T-Shirt",
+    "category": "Apparel",
+    "price": 37.99,
+    "stock": 11,
+    "description": "เสื้อคอนเสิร์ต Calliope ทรง unisex พิมพ์ลายหน้าและหลัง ผ้านุ่มสวมใส่สบาย",
+    "image_url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%232b0b16'/%3E%3Crect y='300' width='400' height='100' fill='%23be123c'/%3E%3Ctext x='200' y='205' text-anchor='middle' font-family='sans-serif' font-size='24' fill='white'%3ECalliope Shirt%3C/text%3E%3C/svg%3E"
+  },
+  {
+    "id": 14,
+    "name": "Ina Takodachi Plushie",
+    "category": "Plushies",
+    "price": 42.99,
+    "stock": 6,
+    "description": "ตุ๊กตา Takodachi ขนาด 35 cm เนื้อผ้านุ่ม สีม่วงพาสเทลสำหรับสะสมและตกแต่ง",
+    "image_url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%231e1038'/%3E%3Crect y='300' width='400' height='100' fill='%238b5cf6'/%3E%3Ctext x='200' y='205' text-anchor='middle' font-family='sans-serif' font-size='24' fill='white'%3ETakodachi%3C/text%3E%3C/svg%3E"
+  },
+  {
+    "id": 15,
+    "name": "Kiara Phoenix Keychain",
+    "category": "Keychains",
+    "price": 12.99,
+    "stock": 28,
+    "description": "พวงกุญแจ Kiara ลายเปลวไฟ อะคริลิคสองชั้นพร้อมคลิปโลหะสีทอง",
+    "image_url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%2330170a'/%3E%3Crect y='300' width='400' height='100' fill='%23ea580c'/%3E%3Ctext x='200' y='205' text-anchor='middle' font-family='sans-serif' font-size='24' fill='white'%3EKiara Key%3C/text%3E%3C/svg%3E"
+  },
+  {
+    "id": 16,
+    "name": "Botan Gaming Acrylic Stand",
+    "category": "Acrylic Stands",
+    "price": 26.99,
+    "stock": 10,
+    "description": "อะคริลิคสแตนด์ Botan ธีม Gaming ขนาด A5 มาพร้อมฐานลายคีย์บอร์ด",
+    "image_url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%23111827'/%3E%3Crect y='300' width='400' height='100' fill='%23475569'/%3E%3Ctext x='200' y='205' text-anchor='middle' font-family='sans-serif' font-size='24' fill='white'%3EBotan Stand%3C/text%3E%3C/svg%3E"
+  },
+  {
+    "id": 17,
+    "name": "Watame Night Fever Album",
+    "category": "Music",
+    "price": 31.99,
+    "stock": 13,
+    "description": "อัลบั้ม Watame Night Fever รุ่นพิเศษ มี booklet และการ์ดสุ่มสะสมหนึ่งใบ",
+    "image_url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%2334220a'/%3E%3Crect y='300' width='400' height='100' fill='%23f59e0b'/%3E%3Ctext x='200' y='205' text-anchor='middle' font-family='sans-serif' font-size='24' fill='white'%3EWatame Album%3C/text%3E%3C/svg%3E"
+  },
+  {
+    "id": 18,
+    "name": "Noel Knight Mug",
+    "category": "Mugs",
+    "price": 21.99,
+    "stock": 20,
+    "description": "แก้วมัค Noel สีขาวมุก 380ml พร้อมลายโล่และอัศวิน ใช้กับไมโครเวฟได้",
+    "image_url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%231f2937'/%3E%3Crect y='300' width='400' height='100' fill='%239ca3af'/%3E%3Ctext x='200' y='205' text-anchor='middle' font-family='sans-serif' font-size='24' fill='white'%3ENoel Mug%3C/text%3E%3C/svg%3E"
+  },
+  {
+    "id": 19,
+    "name": "Amelia Investigator Hoodie",
+    "category": "Apparel",
+    "price": 62.99,
+    "stock": 5,
+    "description": "เสื้อฮู้ด Amelia สีเบจ ปักตรานักสืบ มีกระเป๋าหน้าและฮู้ดปรับสายได้",
+    "image_url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%23291c0e'/%3E%3Crect y='300' width='400' height='100' fill='%23a16207'/%3E%3Ctext x='200' y='205' text-anchor='middle' font-family='sans-serif' font-size='24' fill='white'%3EAmelia Hoodie%3C/text%3E%3C/svg%3E"
+  },
+  {
+    "id": 20,
+    "name": "Kobo Rain Shaman Plushie",
+    "category": "Plushies",
+    "price": 36.99,
+    "stock": 9,
+    "description": "ตุ๊กตา Kobo ธีม Rain Shaman ขนาด 28 cm พร้อมหมวกถอดได้และป้ายสะสม",
+    "image_url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%230c2440'/%3E%3Crect y='300' width='400' height='100' fill='%230ea5e9'/%3E%3Ctext x='200' y='205' text-anchor='middle' font-family='sans-serif' font-size='24' fill='white'%3EKobo Plushie%3C/text%3E%3C/svg%3E"
+  }
+]

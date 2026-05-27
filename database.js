@@ -7,23 +7,13 @@
  */
 
 // ============================================================
-//  PLACEHOLDER DATA — สินค้าตัวอย่าง
+//  PLACEHOLDER DATA - seed catalog from the public JSON source
 // ============================================================
 
-let products = [
-  { id: 1, name: 'Hololive Acrylic Stand Vol.1',   category: 'Acrylic Stands', price: 24.99, stock: 15, description: 'อะคริลิคสแตนด์ขนาด A5 พิมพ์ลาย 4 สี ความละเอียดสูง มาพร้อมฐานตั้งโต๊ะ',         image_url: 'https://placehold.co/400x400/1a1a3e/a855f7?text=Acrylic+Stand' },
-  { id: 2, name: 'Pekora Hoodie Black Edition',     category: 'Apparel',        price: 59.99, stock:  3, description: 'เสื้อฮู้ดดี้สีดำปักลาย Pekora ผ้า cotton 100% น้ำหนักดี ซับในนุ่ม',              image_url: 'https://placehold.co/400x400/1a1a3e/22d3ee?text=Hoodie' },
-  { id: 3, name: 'Gura Shark Plushie',              category: 'Plushies',       price: 39.99, stock:  0, description: 'ตุ๊กตาฉลามน้อย Gura ขนาด 30 cm ผ้านุ่มไม่ระคายเคืองผิว เหมาะสำหรับตกแต่ง',     image_url: 'https://placehold.co/400x400/1a1a3e/f43f5e?text=Plushie' },
-  { id: 4, name: 'Mumei Keychain Set',              category: 'Keychains',      price: 14.99, stock: 50, description: 'พวงกุญแจอะคริลิค Mumei เซต 3 ชิ้น ลายน่ารัก ขนาด 5 cm เคลือบ UV กันซีด',       image_url: 'https://placehold.co/400x400/1a1a3e/10b981?text=Keychain' },
-  { id: 5, name: 'Suisei Stellar Stellar Vinyl',    category: 'Music',          price: 34.99, stock:  8, description: 'แผ่น Vinyl เพลง Stellar Stellar ของ Suisei ขนาด 12 นิ้ว พิมพ์ปก Full Art',     image_url: 'https://placehold.co/400x400/1a1a3e/f59e0b?text=Vinyl' },
-  { id: 6, name: 'Marine Anniversary Mug',          category: 'Mugs',           price: 19.99, stock: 22, description: 'แก้วมัคเซรามิก 350ml ลาย Marine ครบรอบ 3 ปี เปลี่ยนสีตอนใส่น้ำร้อน',            image_url: 'https://placehold.co/400x400/1a1a3e/a855f7?text=Mug' },
-  { id: 7, name: 'Korone Doggo Plushie XL',         category: 'Plushies',       price: 54.99, stock:  4, description: 'ตุ๊กตาสุนัขน้อย Korone รุ่น XL ขนาด 50 cm ผ้าขนนุ่มเด้ง สีเหลืองสดใส',        image_url: 'https://placehold.co/400x400/1a1a3e/f59e0b?text=Korone+XL' },
-  { id: 8, name: 'Aqua Idol Outfit Acrylic',        category: 'Acrylic Stands', price: 29.99, stock: 12, description: 'อะคริลิคลาย Aqua ชุด Idol ขนาด B5 พิมพ์สีสดใส กระดาษหนา 5 มม.',               image_url: 'https://placehold.co/400x400/1a1a3e/22d3ee?text=Aqua+Stand' },
-  { id: 9, name: 'Kronii Oversized T-Shirt',        category: 'Apparel',        price: 44.99, stock:  7, description: 'เสื้อยืด Oversized ลาย Kronii สีขาวพิมพ์ลายนาฬิกา ผ้า cotton combed 32s',     image_url: 'https://placehold.co/400x400/1a1a3e/a855f7?text=T-Shirt' },
-  { id: 10, name: 'IRyS IRyStocrat Album CD',       category: 'Music',          price: 27.99, stock: 16, description: 'แผ่น CD อัลบั้ม EP แรกของ IRyS มาพร้อม Photobook 24 หน้า และการ์ดลายเซ็น',   image_url: 'https://placehold.co/400x400/1a1a3e/10b981?text=CD+Album' },
-  { id: 11, name: 'Fubuki Winter Keychain',         category: 'Keychains',      price:  9.99, stock: 35, description: 'พวงกุญแจ Fubuki ชุดฤดูหนาว อะคริลิคใส สาย PU ยาว 10 cm พร้อมกระดิ่งจิ๋ว',    image_url: 'https://placehold.co/400x400/1a1a3e/22d3ee?text=FBK+Key' },
-  { id: 12, name: 'Miko Sakura Gradient Mug',       category: 'Mugs',           price: 22.99, stock: 18, description: 'แก้วมัค Miko ลาย Sakura Gradient 400ml พิมพ์ทั้งสองด้าน ล้างเครื่องได้',       image_url: 'https://placehold.co/400x400/1a1a3e/f43f5e?text=Miko+Mug' },
-];
+const productSeed = require('./data/products.json');
+
+// Clone each product because checkout changes stock only in server memory.
+let products = productSeed.map(product => ({ ...product }));
 
 let users  = []; // { id, username, email, password_hash, role }
 let orders = []; // { id, user_id, total_amount, status, created_at }

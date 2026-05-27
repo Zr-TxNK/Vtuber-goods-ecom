@@ -13,9 +13,11 @@ Vtuber-goods-ecom/
 ├── index.html              ← หน้าเว็บหลัก (HTML)
 ├── style.css               ← ตกแต่งหน้าเว็บ (CSS)
 ├── app.js                  ← ลอจิกหน้าบ้าน (JavaScript)
+├── data/
+│   └── products.json       ← ข้อมูลสินค้า 20 รายการสำหรับ catalog
 │
 ├── server.js               ← Express server (Node.js backend)
-├── database.js             ← In-memory placeholder data (แทน SQLite)
+├── database.js             ← In-memory data ที่ seed จาก products.json
 │
 ├── authController.js       ← จัดการ login/register
 ├── orderController.js      ← จัดการคำสั่งซื้อ
@@ -47,7 +49,7 @@ Vtuber-goods-ecom/
 3. คลิกขวาที่ `index.html` → **"Open with Live Server"**
 4. เบราว์เซอร์จะเปิดขึ้นมาอัตโนมัติ ✅
 
-> ใช้ **mock data** จาก `app.js` (12 สินค้าตัวอย่าง) — ไม่ต้องการ backend หรือ database ใดๆ
+> หน้า catalog โหลดข้อมูลสินค้า 20 รายการจาก `data/products.json` ผ่าน `fetch()` — ไม่ต้องการ backend หรือ database ใดๆ
 
 ---
 
@@ -68,17 +70,23 @@ node server.js
 http://localhost:3000
 ```
 
-> ใช้ **in-memory data** จาก `database.js` — ไม่มี SQLite, ข้อมูลจะ reset ทุกครั้งที่ restart server
+> ใช้ **in-memory data** จาก `database.js` ซึ่งเริ่มต้นจาก `data/products.json` — ไม่มี SQLite และข้อมูล order/stock จะ reset ทุกครั้งที่ restart server
 
 ---
 
-## 🔄 เปลี่ยนโหมด Mock ↔ Backend
+## 🔄 เปลี่ยนโหมด JSON ↔ Backend
 
 เปิดไฟล์ `app.js` แล้วหาบรรทัดนี้ที่ด้านบน:
 
 ```js
-const USE_MOCK_DATA = true;   // 🟡 Live Server mode
-const USE_MOCK_DATA = false;  // 🟢 Express backend mode
+const USE_MOCK_DATA = true;   // 🟡 โหลด products.json + จำลอง auth/checkout
+const USE_MOCK_DATA = false;  // 🟢 โหลด /api/products + ใช้ Express backend
+```
+
+ในโหมด Live Server การไหลของข้อมูล catalog คือ:
+
+```text
+initApp() -> requestProducts() -> fetch('./data/products.json') -> renderUI()
 ```
 
 ---
@@ -87,8 +95,8 @@ const USE_MOCK_DATA = false;  // 🟢 Express backend mode
 
 | Feature | รายละเอียด |
 |---------|-----------|
-| 🛍️ แคตตาล็อกสินค้า | แสดงสินค้า 12 รายการพร้อม badge สต็อก |
-| 🔍 ค้นหา + กรอง | ค้นหาชื่อ, กรองหมวดหมู่, กรองราคา |
+| 🛍️ แคตตาล็อกสินค้า | แสดงสินค้า 20 รายการจาก JSON พร้อม badge สต็อก |
+| 🔍 ค้นหา + กรอง | ค้นหาชื่อ, กรองหมวดหมู่/ราคา และเรียงราคาทันที |
 | 🛒 ตะกร้าสินค้า | เพิ่ม/ลด/ลบสินค้า, บันทึกใน localStorage |
 | 🔐 ระบบสมาชิก | สมัครสมาชิก / เข้าสู่ระบบ (mock หรือ JWT จริง) |
 | 📦 ประวัติคำสั่งซื้อ | ดูรายการสั่งซื้อหลัง login |
@@ -132,12 +140,28 @@ DOM.productsGrid.addEventListener('click', (event) => {
 });
 ```
 
-### 2. Debouncing
-ป้องกัน function ทำงานถี่เกินไปตอนพิมพ์ค้นหา — รอให้หยุดพิมพ์ 300ms ก่อนค่อย filter
+### 2. Fetch JSON, Filtering และ Debouncing
+หน้าเว็บ request ข้อมูลครั้งแรกจาก JSON แล้วเก็บไว้ใน `allProducts` จากนั้นการค้นหา/เลือกหมวดหมู่จะ filter state นี้และ render ใหม่โดยไม่ request ไฟล์ซ้ำ การพิมพ์ search ใช้ debounce 300ms
 
 ```js
 // app.js
-DOM.searchInput.addEventListener('input', debounce(() => fetchProducts(), 300));
+async function requestProducts() {
+  const response = await fetch(PRODUCTS_JSON_PATH);
+  allProducts = await response.json();
+  renderFilteredProducts();
+}
+
+function filterProducts(searchTerm, category) {
+  const term = searchTerm.trim().toLowerCase();
+  return allProducts.filter(product => {
+    const nameMatches = !term || product.name.toLowerCase().includes(term);
+    const categoryMatches = category === 'All' || product.category === category;
+    return nameMatches && categoryMatches;
+  });
+}
+
+DOM.searchInput.addEventListener('input', debounce(renderFilteredProducts, 300));
+DOM.categoryFilter.addEventListener('change', renderFilteredProducts);
 ```
 
 ### 3. localStorage

@@ -1,135 +1,22 @@
 /**
- * VTuber Merch Hub — app.js
- * 
- * ไฟล์นี้ทำงานได้ 2 โหมด:
- *   1) Live Server (เปิดด้วย VS Code Live Server) — ใช้ MOCK_PRODUCTS เป็นข้อมูลจำลอง
- *   2) Express Backend  — ถ้ารัน node server.js จะดึงข้อมูลจริงจาก API /api/products
+ * VTuber Merch Hub - app.js
  *
- * เปลี่ยนโหมดได้ที่ USE_MOCK_DATA ด้านล่าง
+ * Product catalog data flow:
+ *   initApp() -> requestProducts() -> fetch(data/products.json) -> renderUI()
+ *
+ * เมื่อใช้ backend เต็มรูปแบบ requestProducts() จะอ่าน /api/products แทน เพื่อให้
+ * stock ที่ถูกตัดหลัง checkout แสดงผลล่าสุด ข้อมูลเริ่มต้นของทั้งสองโหมดมาจาก
+ * data/products.json ชุดเดียวกัน
  */
 
 // ============================================================
 // ⚙️  CONFIG — เปลี่ยนตรงนี้!
 // ============================================================
 
-// true  = ใช้ข้อมูลจำลอง (Live Server ไม่ต้องรัน node)
-// false = ดึงข้อมูลจาก Express backend (node server.js)
+// true  = โหลด catalog JSON ผ่าน Live Server และจำลอง auth/checkout
+// false = โหลด catalog และดำเนินรายการผ่าน Express backend (node server.js)
 const USE_MOCK_DATA = true;
-
-// ============================================================
-// 📦  MOCK DATA — ข้อมูลสินค้าตัวอย่าง
-// ============================================================
-
-const MOCK_PRODUCTS = [
-  {
-    id: 1,
-    name: 'Hololive Acrylic Stand Vol.1',
-    category: 'Acrylic Stands',
-    price: 24.99,
-    stock: 15,
-    description: 'อะคริลิคสแตนด์ขนาด A5 พิมพ์ลาย 4 สี ความละเอียดสูง มาพร้อมฐานตั้งโต๊ะ',
-    image_url: 'https://placehold.co/400x400/1a1a3e/a855f7?text=Acrylic+Stand'
-  },
-  {
-    id: 2,
-    name: 'Pekora Hoodie Black Edition',
-    category: 'Apparel',
-    price: 59.99,
-    stock: 3,
-    description: 'เสื้อฮู้ดดี้สีดำปักลาย Pekora ผ้า cotton 100% น้ำหนักดี ซับในนุ่ม',
-    image_url: 'https://placehold.co/400x400/1a1a3e/22d3ee?text=Hoodie'
-  },
-  {
-    id: 3,
-    name: 'Gura Shark Plushie',
-    category: 'Plushies',
-    price: 39.99,
-    stock: 0,
-    description: 'ตุ๊กตาฉลามน้อย Gura ขนาด 30 cm ผ้านุ่มไม่ระคายเคืองผิว เหมาะสำหรับตกแต่ง',
-    image_url: 'https://placehold.co/400x400/1a1a3e/f43f5e?text=Plushie'
-  },
-  {
-    id: 4,
-    name: 'Mumei Keychain Set',
-    category: 'Keychains',
-    price: 14.99,
-    stock: 50,
-    description: 'พวงกุญแจอะคริลิค Mumei เซต 3 ชิ้น ลายน่ารัก ขนาด 5 cm เคลือบ UV กันซีด',
-    image_url: 'https://placehold.co/400x400/1a1a3e/10b981?text=Keychain'
-  },
-  {
-    id: 5,
-    name: 'Suisei "Stellar Stellar" Vinyl',
-    category: 'Music',
-    price: 34.99,
-    stock: 8,
-    description: 'แผ่น Vinyl เพลง Stellar Stellar ของ Suisei ขนาด 12 นิ้ว พิมพ์ปก Full Art',
-    image_url: 'https://placehold.co/400x400/1a1a3e/f59e0b?text=Vinyl'
-  },
-  {
-    id: 6,
-    name: 'Marine Anniversary Mug',
-    category: 'Mugs',
-    price: 19.99,
-    stock: 22,
-    description: 'แก้วมัคเซรามิก 350ml ลาย Marine ครบรอบ 3 ปี พิมพ์ Heat-sensitive เปลี่ยนสีตอนใส่น้ำร้อน',
-    image_url: 'https://placehold.co/400x400/1a1a3e/a855f7?text=Mug'
-  },
-  {
-    id: 7,
-    name: 'Korone Doggo Plushie XL',
-    category: 'Plushies',
-    price: 54.99,
-    stock: 4,
-    description: 'ตุ๊กตาสุนัขน้อย Korone รุ่น XL ขนาด 50 cm ผ้าขนนุ่มเด้ง สีเหลืองสดใส',
-    image_url: 'https://placehold.co/400x400/1a1a3e/f59e0b?text=Korone+XL'
-  },
-  {
-    id: 8,
-    name: 'Aqua Idol Outfit Acrylic',
-    category: 'Acrylic Stands',
-    price: 29.99,
-    stock: 12,
-    description: 'อะคริลิคลาย Aqua ชุด Idol ขนาด B5 พิมพ์สีสดใส กระดาษหนา 5 มม.',
-    image_url: 'https://placehold.co/400x400/1a1a3e/22d3ee?text=Aqua+Stand'
-  },
-  {
-    id: 9,
-    name: 'Kronii Oversized T-Shirt',
-    category: 'Apparel',
-    price: 44.99,
-    stock: 7,
-    description: 'เสื้อยืด Oversized ลาย Kronii สีขาวพิมพ์ลายนาฬิกา ผ้า cotton combed 32s',
-    image_url: 'https://placehold.co/400x400/1a1a3e/a855f7?text=T-Shirt'
-  },
-  {
-    id: 10,
-    name: 'IRyS "IRyStocrat" Album CD',
-    category: 'Music',
-    price: 27.99,
-    stock: 16,
-    description: 'แผ่น CD อัลบั้ม EP แรกของ IRyS มาพร้อม Photobook 24 หน้า และการ์ดลายเซ็น',
-    image_url: 'https://placehold.co/400x400/1a1a3e/10b981?text=CD+Album'
-  },
-  {
-    id: 11,
-    name: 'Fubuki Winter Keychain',
-    category: 'Keychains',
-    price: 9.99,
-    stock: 35,
-    description: 'พวงกุญแจ Fubuki ชุดฤดูหนาว อะคริลิคใส สาย PU ยาว 10 cm พร้อมกระดิ่งจิ๋ว',
-    image_url: 'https://placehold.co/400x400/1a1a3e/22d3ee?text=FBK+Key'
-  },
-  {
-    id: 12,
-    name: 'Miko Sakura Gradient Mug',
-    category: 'Mugs',
-    price: 22.99,
-    stock: 18,
-    description: 'แก้วมัค Miko ลาย Sakura Gradient 400ml พิมพ์ทั้งสองด้าน ล้างเครื่องได้',
-    image_url: 'https://placehold.co/400x400/1a1a3e/f43f5e?text=Miko+Mug'
-  }
-];
+const PRODUCTS_JSON_PATH = './data/products.json';
 
 // ============================================================
 // 🗃️  GLOBAL STATE
@@ -138,7 +25,7 @@ const MOCK_PRODUCTS = [
 let cartState    = [];  // สินค้าในตะกร้า
 let userToken    = null;
 let currentUser  = null;
-let allProducts  = []; // สำรองไว้ filter ฝั่ง client
+let allProducts  = []; // ข้อมูล catalog ล่าสุดจาก JSON หรือ API สำหรับ filter ฝั่ง client
 
 // ============================================================
 // 🔗  DOM REFERENCES — แคช element ที่ใช้บ่อย
@@ -150,6 +37,7 @@ const DOM = {
   categoryFilter:  document.getElementById('category-filter'),
   minPriceFilter:  document.getElementById('min-price-filter'),
   maxPriceFilter:  document.getElementById('max-price-filter'),
+  sortFilter:      document.getElementById('sort-filter'),
   clearFiltersBtn: document.getElementById('clear-filters-btn'),
   resultsCount:    document.getElementById('results-count'),
 
@@ -218,6 +106,10 @@ function hydrateState() {
     try {
       cartState = JSON.parse(storedCart);
       if (!Array.isArray(cartState)) cartState = [];
+      // กรอง item ที่ข้อมูลไม่ครบออก (ป้องกัน data เก่าเสีย)
+      cartState = cartState.filter(i =>
+        i && typeof i.price === 'number' && typeof i.quantity === 'number' && i.name && i.productId != null
+      );
     } catch (e) {
       cartState = [];
       localStorage.removeItem('cart');
@@ -244,7 +136,7 @@ function debounce(fn, ms) {
   };
 }
 
-DOM.searchInput.addEventListener('input', debounce(() => fetchProducts(), 300));
+DOM.searchInput.addEventListener('input', debounce(renderFilteredProducts, 300));
 
 // ============================================================
 // 🖱️  EVENT DELEGATION — จับ click "Add to Cart" ทั้ง grid
@@ -364,69 +256,136 @@ window.updateItemQuantity = updateItemQuantity;
 window.removeCartItem     = removeCartItem;
 
 // ============================================================
-// 📡  FETCH PRODUCTS
+// 📡  REQUEST PRODUCTS AND RENDER CATALOG
 // ============================================================
 
-async function fetchProducts() {
-  DOM.resultsCount.textContent = 'กำลังค้นหา...';
-
-  if (USE_MOCK_DATA) {
-    // โหมด Live Server — filter ข้อมูลจำลอง
-    filterAndRenderMockProducts();
-  } else {
-    // โหมด Backend — เรียก Express API
-    await fetchProductsFromAPI();
-  }
-}
-
-/** กรอง MOCK_PRODUCTS ด้วย filter ปัจจุบัน แล้ว render */
-function filterAndRenderMockProducts() {
-  const keyword  = DOM.searchInput.value.trim().toLowerCase();
-  const category = DOM.categoryFilter.value;
-  const minPrice = parseFloat(DOM.minPriceFilter.value) || 0;
-  const maxPrice = parseFloat(DOM.maxPriceFilter.value) || Infinity;
-
-  let results = MOCK_PRODUCTS.filter(p => {
-    const matchKeyword  = !keyword || p.name.toLowerCase().includes(keyword) || p.description.toLowerCase().includes(keyword);
-    const matchCategory = !category || p.category === category;
-    const matchMin      = p.price >= minPrice;
-    const matchMax      = p.price <= maxPrice;
-    return matchKeyword && matchCategory && matchMin && matchMax;
-  });
-
-  renderProducts(results);
-}
-
-/** เรียก /api/products จาก Express backend */
-async function fetchProductsFromAPI() {
-  const keyword  = DOM.searchInput.value;
-  const category = DOM.categoryFilter.value;
-  const minPrice = DOM.minPriceFilter.value;
-  const maxPrice = DOM.maxPriceFilter.value;
-
-  const params = new URLSearchParams();
-  if (keyword)  params.append('keyword',  keyword);
-  if (category) params.append('category', category);
-  if (minPrice) params.append('minPrice', minPrice);
-  if (maxPrice) params.append('maxPrice', maxPrice);
+/**
+ * ขอข้อมูล catalog จาก data source แล้วส่งต่อไปแสดงผล
+ *
+ * Data flow ในโหมด Live Server:
+ *   requestProducts() -> fetch('./data/products.json')
+ *   -> response.json() -> allProducts -> renderFilteredProducts() -> renderUI()
+ *
+ * โหมด backend ใช้ API แทนไฟล์ JSON เพื่อให้ stock หลัง checkout เป็นค่าล่าสุด
+ * โดย backend เริ่มต้นข้อมูลจาก products.json ชุดเดียวกัน
+ */
+async function requestProducts() {
+  DOM.resultsCount.textContent = 'กำลังโหลดสินค้า...';
 
   try {
-    const res = await fetch(`/api/products?${params}`);
-    if (!res.ok) throw new Error('API error');
-    const products = await res.json();
-    renderProducts(products);
+    const response = USE_MOCK_DATA
+      ? await fetch(PRODUCTS_JSON_PATH)
+      : await fetch('/api/products');
+
+    if (!response.ok) {
+      throw new Error(`Product request failed (${response.status})`);
+    }
+
+    // แปลง response body จาก JSON text เป็น array ของ product objects
+    const products = await response.json();
+    if (!Array.isArray(products) || !products.every(isValidProduct)) {
+      throw new Error('Product data format is invalid');
+    }
+
+    // เก็บข้อมูลต้นฉบับไว้หนึ่งชุด; การค้นหาครั้งถัดไปไม่ต้อง request ใหม่
+    allProducts = products;
+    renderFilteredProducts();
   } catch (err) {
-    console.error('fetchProducts error:', err);
+    console.error('requestProducts error:', err);
+    allProducts = [];
+    DOM.productsGrid.innerHTML = '';
     DOM.resultsCount.textContent = 'โหลดสินค้าไม่สำเร็จ';
-    showToast('โหลดสินค้าไม่ได้ — ลองรัน node server.js', 'error');
+    showToast('โหลดสินค้าไม่ได้ กรุณาตรวจไฟล์ข้อมูลหรือ server', 'error');
   }
+}
+
+/** ตรวจ contract ที่ product card และ cart จำเป็นต้องใช้งานก่อน render */
+function isValidProduct(product) {
+  return product &&
+    Number.isInteger(product.id) &&
+    typeof product.name === 'string' &&
+    typeof product.category === 'string' &&
+    Number.isFinite(product.price) &&
+    Number.isInteger(product.stock) &&
+    typeof product.description === 'string' &&
+    typeof product.image_url === 'string';
+}
+
+/**
+ * กรอง source-of-truth (`allProducts`) ตาม intent ของผู้ใช้
+ * ฟังก์ชันนี้ไม่อ่านหรือแก้ DOM จึงเรียกซ้ำและทดสอบ business logic ได้ง่าย
+ */
+function filterProducts(searchTerm, category) {
+  const normalizedTerm = searchTerm.trim().toLowerCase();
+
+  return allProducts.filter(product => {
+    // `.includes()` ค้นแบบ literal จึงรองรับคำค้นอย่าง @ หรือ # โดยไม่เกิด error
+    const matchesName = !normalizedTerm ||
+      product.name.toLowerCase().includes(normalizedTerm);
+    const matchesCategory = category === 'All' ||
+      product.category === category;
+
+    return matchesName && matchesCategory;
+  });
+}
+
+/** คง price-range feature เดิมไว้ แยกจาก search/category logic ของกิจกรรม */
+function filterProductsByPrice(products, minPriceValue, maxPriceValue) {
+  const minPrice = Number.parseFloat(minPriceValue);
+  const maxPrice = Number.parseFloat(maxPriceValue);
+
+  return products.filter(product => {
+    const matchesMin = Number.isNaN(minPrice) || product.price >= minPrice;
+    const matchesMax = Number.isNaN(maxPrice) || product.price <= maxPrice;
+    return matchesMin && matchesMax;
+  });
+}
+
+/** คืน array ใหม่ที่เรียงราคา โดยไม่เปลี่ยนลำดับของ source-of-truth */
+function sortProducts(products, sortOrder) {
+  const sortedProducts = [...products];
+
+  if (sortOrder === 'price-desc') {
+    return sortedProducts.sort((a, b) => b.price - a.price);
+  }
+  if (sortOrder === 'price-asc') {
+    return sortedProducts.sort((a, b) => a.price - b.price);
+  }
+
+  return sortedProducts;
+}
+
+/**
+ * Consumer ของ DOM events: จับค่าจาก controls -> ประมวลผล array -> render DOM ใหม่
+ * Flow นี้ตรงกับกิจกรรม User Action -> Capture Input -> Filter Array -> Update DOM
+ */
+function renderFilteredProducts() {
+  const productsByIntent = filterProducts(
+    DOM.searchInput.value,
+    DOM.categoryFilter.value
+  );
+  const productsInPriceRange = filterProductsByPrice(
+    productsByIntent,
+    DOM.minPriceFilter.value,
+    DOM.maxPriceFilter.value
+  );
+  const visibleProducts = sortProducts(
+    productsInPriceRange,
+    DOM.sortFilter.value
+  );
+
+  renderUI(visibleProducts);
 }
 
 // ============================================================
 // 🃏  RENDER PRODUCTS
 // ============================================================
 
-function renderProducts(products) {
+/**
+ * รับ product array แล้วสร้าง HTML card ให้ #products-grid
+ * ฟังก์ชันนี้ไม่ fetch ข้อมูลเอง จึงมีหน้าที่เดียวคือแปลง state เป็น UI
+ */
+function renderUI(products) {
   DOM.productsGrid.innerHTML = '';
   DOM.resultsCount.textContent = `พบ ${products.length} รายการ`;
 
@@ -523,7 +482,7 @@ async function checkout() {
     persistCartState();
     updateCartUI();
     closeDrawer(DOM.cartDrawer);
-    fetchProducts();
+    await requestProducts();
     viewOrderHistory();
   } catch (err) {
     showToast(err.message, 'error');
@@ -599,7 +558,7 @@ function renderOrderHistory(orders) {
 function backToCatalog() {
   DOM.profileSection.classList.remove('active');
   DOM.catalogSection.style.display = 'grid';
-  fetchProducts();
+  renderFilteredProducts();
 }
 
 // ============================================================
@@ -759,15 +718,17 @@ DOM.loginForm.addEventListener('submit',   handleLogin);
 DOM.registerForm.addEventListener('submit', handleRegister);
 DOM.navLogoutBtn.addEventListener('click',  clearAuthSession);
 
-DOM.categoryFilter.addEventListener('change', fetchProducts);
-DOM.minPriceFilter.addEventListener('change', fetchProducts);
-DOM.maxPriceFilter.addEventListener('change', fetchProducts);
+DOM.categoryFilter.addEventListener('change', renderFilteredProducts);
+DOM.minPriceFilter.addEventListener('change', renderFilteredProducts);
+DOM.maxPriceFilter.addEventListener('change', renderFilteredProducts);
+DOM.sortFilter.addEventListener('change', renderFilteredProducts);
 DOM.clearFiltersBtn.addEventListener('click', () => {
-  DOM.categoryFilter.value  = '';
+  DOM.categoryFilter.value  = 'All';
   DOM.minPriceFilter.value  = '';
   DOM.maxPriceFilter.value  = '';
+  DOM.sortFilter.value      = 'default';
   DOM.searchInput.value     = '';
-  fetchProducts();
+  renderFilteredProducts();
 });
 
 DOM.navLogo.addEventListener('click',       backToCatalog);
@@ -780,9 +741,10 @@ DOM.checkoutBtn.addEventListener('click',   checkout);
 // 🚀  INIT — เริ่มต้นเมื่อหน้าโหลดเสร็จ
 // ============================================================
 
-window.addEventListener('DOMContentLoaded', () => {
+function initApp() {
   hydrateState();
-  fetchProducts();
+  // Data flow starts here: request the product source, then render cards in renderUI().
+  requestProducts();
 
   // Navbar scroll effect
   const navbar = document.getElementById('main-navbar');
@@ -795,4 +757,11 @@ window.addEventListener('DOMContentLoaded', () => {
   // แสดง mode ใน console เพื่อ debug ง่าย
   console.log(`%c VTuber Merch Hub`, 'font-size:16px;font-weight:bold;color:#a855f7');
   console.log(`%c โหมด: ${USE_MOCK_DATA ? '🟡 Live Server (Mock Data)' : '🟢 Express Backend'}`, 'color:#22d3ee');
-});
+}
+
+// รองรับทั้งกรณี DOMContentLoaded ยังไม่ fire และ fire ไปแล้ว
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}

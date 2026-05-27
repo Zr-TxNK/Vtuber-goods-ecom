@@ -154,7 +154,7 @@ h1, h2, h3, h4, h5, h6 {
 .container {
   position: relative;
   z-index: 1;
-  max-width: 1240px;
+  max-width: 1560px;
   margin: 2rem auto;
   padding: 0 1.5rem;
   flex: 1;
@@ -712,7 +712,7 @@ h1, h2, h3, h4, h5, h6 {
    ============================================================ */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  grid-template-columns: repeat(5, 1fr);
   gap: 1.4rem;
 }
 
@@ -1427,6 +1427,15 @@ h1, h2, h3, h4, h5, h6 {
 /* ============================================================
    RESPONSIVE
    ============================================================ */
+
+/* 5 → 4 การ์ด (ยังมี sidebar) */
+@media (max-width: 1280px) {
+  .products-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* 4 → 3 การ์ด + sidebar ยุบเป็นแถวบน */
 @media (max-width: 960px) {
   .catalog-section {
     grid-template-columns: 1fr;
@@ -1443,6 +1452,10 @@ h1, h2, h3, h4, h5, h6 {
     min-width: 160px;
   }
 
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   .hero-decoration { display: none; }
 
   .hero-banner {
@@ -1451,6 +1464,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* 3 → 2 การ์ด */
 @media (max-width: 700px) {
   .navbar {
     flex-wrap: wrap;
@@ -1467,6 +1481,11 @@ h1, h2, h3, h4, h5, h6 {
 
   .nav-actions {
     gap: 0.5rem;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
 
   .hero-banner h1 {
@@ -1493,6 +1512,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* มือถือเล็ก */
 @media (max-width: 480px) {
   .container { padding: 0 1rem; }
 
@@ -1503,7 +1523,24 @@ h1, h2, h3, h4, h5, h6 {
   .auth-group .btn-secondary { display: none; }
 
   .products-grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .product-content {
+    padding: 0.9rem;
+  }
+
+  .product-name {
+    font-size: 0.85rem;
+  }
+
+  .product-price {
+    font-size: 1rem;
+  }
+
+  .add-to-cart-btn {
+    font-size: 0.72rem;
+    padding: 0.4rem 0.6rem;
   }
 }
